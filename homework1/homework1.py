@@ -19,12 +19,15 @@
 # - A (3,6); B (2,1) -> 5,09
 # - A (7,-5); B (1,-1) -> 7,21
 
+from urllib import request
+
+
 def MakeСhoice(question):  # определяем выполнять (повторять) задачу или переходить к следующей    print(question)
     yes_answers = ['y', 'yes', 'д', 'да']
     no_answers = ['n', 'no', 'н', 'нет']
     print(question)
     while (True):
-        print("Ведите y, yes, д, да если 'Да' либо n, no, н, нет если 'Нет': ")
+        print("Ведите y, yes, д, да если 'ДА' либо n, no, н, нет если 'НЕТ': ")
         choice = input().lower()
         if choice in yes_answers:
             return True
@@ -32,14 +35,21 @@ def MakeСhoice(question):  # определяем выполнять (повт�
             return False
         
 
-def GetData():
+def GetIntInResponce(request):
+    while (True):
+        n = input(request)
+        if n.isdigit() or (n[0] == '-' and n[1:].isdigit()):
+            return int(n)
+
+        print("Это не целое число!")
+        
+
+
+def GetDayNumber():
     flag = True
     while flag:
-        a = input("Введите число от 1 до 7: ")
-        if not a.isdigit():
-            print("Это не число от 1 до 7")
-            continue 
-        a = int(a)
+        a = GetIntInResponce("Введите число от 1 до 7: ")
+        
         if a < 1 or a > 7:
             print("Это не число от 1 до 7")
         else: 
@@ -66,8 +76,50 @@ def WhatDay(number):  # сообщаем что за день :-)
         return "Что-то не так..."
 
 
+def GetBooleanData():
+    while True:
+        b = GetIntInResponce("Введите 1 (True) или 0 (False): ")
+        
+        if b == 1:
+            return True
+        elif b == 0:
+            return False
+        else:
+            print("Это не 0 и не 1.")
+         
+    
 print()
 while MakeСhoice('Решаем задачу про дни недели? '):
-    day_number = GetData()
+    day_number = GetDayNumber()
     print(WhatDay(day_number))
     print()
+
+print()
+while MakeСhoice('Решаем задачу про проверку истинности? '):
+    print("Введите x")
+    x = GetBooleanData()
+    print()
+    print("Введите y")
+    y = GetBooleanData()
+    print()
+    print("Введите z")
+    z = GetBooleanData()
+    print()
+    print('x =', x, 'y =', y, 'z =', z)
+    print()
+    if not (x or y or z) == (not x and not y and not z):
+        print(f'¬({x} ⋁ {y} ⋁ {z}) = ¬{x} ⋀ ¬{y} ⋀ ¬{z} - это True')
+    else:
+        print(f'¬({x} ⋁ {y} ⋁ {z}) = ¬{x} ⋀ ¬{y} ⋀ ¬{z} - это False')
+    print()
+
+    print('Проверка всех возможных вариантов')
+    for x in range(0,2):
+        for y in range(0,2):
+            for z in range(0,2): 
+                if not (x or y or z) == (not x and not y and not z):
+                    print(f'¬({x} ⋁ {y} ⋁ {z}) = ¬{x} ⋀ ¬{y} ⋀ ¬{z} - это True')
+                else:
+                    print(f'¬({x} ⋁ {y} ⋁ {z}) = ¬{x} ⋀ ¬{y} ⋀ ¬{z} - это False')
+    print()
+    
