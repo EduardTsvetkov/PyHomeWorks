@@ -11,10 +11,9 @@
 
 # Задание 3 Задайте список из n чисел последовательности (1+1/n)^n и выведите на экран их сумму,
 # округлённую до трёх знаков после точки.
-
 # Пример:
-
 # Для n = 6 -> 14.072
+
 # Задание 4 Задайте список из N элементов, заполненных числами из промежутка [-N, N].
 # Найдите произведение элементов на позициях a и b.
 # Значения N, a и b вводит пользователь с клавиатуры.
@@ -59,10 +58,17 @@ def factorial(n: int) -> int:  # вспомним рекурсию :-)
         return n
     else: 
         return n * factorial(n - 1)
-    
 
+
+def check_sum_elements(list_of_number: list[int | float]) -> int | float:
+    result = 0 
+    for n in list_of_number:
+        result += n
+    return result
+
+    
 print()
-while (make_choice("Выполняем задачу 1 (сумма цифр)? ")):
+while make_choice("Выполняем задачу 1 (сумма цифр)? "):
     print()
     num = input("Введите число: ")
     sum_digit = get_sum_digit(num)
@@ -71,10 +77,19 @@ while (make_choice("Выполняем задачу 1 (сумма цифр)? "))
 
 
 print()
-while (make_choice("Выполняем задачу 2 (факториал)? ")):
-    n_factorial = factorial(get_int('Введите целое число: '))
-    print(n_factorial)
+while make_choice("Выполняем задачу 2 (факториалы)? "):
+    n_factorial = get_int('Введите целое число: ')
+    factorial_list = [factorial(i) for i in range(1, n_factorial + 1)]
+    print(factorial_list)
     print()
 
 
 print()
+while make_choice("Выполняем задачу 3 (сумма элементов последовательности)? "):
+    elements = get_int('Введите целое число элементов: ')
+    my_list = [(1 + 1 / i)**i for i in range(1, elements + 1)]
+    sum_elements = check_sum_elements(my_list)
+    print("В списке")
+    print(my_list)
+    print(f'Сумма элементов приблизительно равна {round(sum_elements, 3)}')
+    print()
