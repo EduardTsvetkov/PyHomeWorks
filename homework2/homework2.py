@@ -35,6 +35,16 @@ def make_choice(question: str) -> bool:  # определяем выполнят
             return False
 
 
+def get_int(request: str) -> int:
+    while (True):
+        n = input(request)
+
+        if n != '' and (n.isdigit() or (n[0] == '-' and n[1:].isdigit())):
+            return int(n)
+
+        print('\033[31mЭто не целое число!\033[37m')
+
+
 def get_sum_digit(n: str) -> int:
     result = 0
     chars_list = list(n)    
@@ -42,6 +52,13 @@ def get_sum_digit(n: str) -> int:
         if c.isdigit():
             result += int(c)
     return result      
+    
+
+def factorial(n: int) -> int:  # вспомним рекурсию :-)
+    if n == 1:
+        return n
+    else: 
+        return n * factorial(n - 1)
     
 
 print()
@@ -53,3 +70,11 @@ while (make_choice("Выполняем задачу 1 (сумма цифр)? "))
     print()
 
 
+print()
+while (make_choice("Выполняем задачу 2 (факториал)? ")):
+    n_factorial = factorial(get_int('Введите целое число: '))
+    print(n_factorial)
+    print()
+
+
+print()
