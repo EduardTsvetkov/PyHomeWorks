@@ -87,10 +87,7 @@ def mixing_list(inp_list: list[int]) -> list[int]:
     for _ in range(1000):
         i = random.randrange(0, l)
         j = random.randrange(0, l)
-        a = result[i]
-        b = result[j]
-        result[i] = b
-        result[j] = a
+        result[i], result[j] = result[j], result[i]
     return result
 
 
@@ -159,3 +156,4 @@ while make_choice("Выполняем задачу 5 (перемешивание
     print('Перемешаный список:')
     print(output_list)
     print()
+    
