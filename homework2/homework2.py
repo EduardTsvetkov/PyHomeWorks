@@ -23,8 +23,8 @@
 import random
 
 
-def make_choice(
-        question: str) -> bool:  # определяем выполнять (повторять) задачу или переходить к следующей    print(question)
+def make_choice(question: str) -> bool:
+    """Возвращаем ответ на вопрос: True - если 'да', False - если 'нет'"""  
     yes_answers = ['y', 'yes', 'д', 'да', 'lf', 'нуы', 'l']
     no_answers = ['n', 'no', 'н', 'нет', 'ytn', 'тщ', 'т']
     print(question)
@@ -37,6 +37,7 @@ def make_choice(
 
 
 def get_int(request: str) -> int:
+    """Функция возвращает целое число, введенное с клавиатуры"""
     while (True):
         n = input(request)
 
@@ -47,6 +48,7 @@ def get_int(request: str) -> int:
 
 
 def get_sum_digit(n: str) -> int:
+    """Функция принимает число в виде строки и возвращает сумму его цифр"""
     result = 0
     chars_list = list(n)
     for c in chars_list:
@@ -56,6 +58,7 @@ def get_sum_digit(n: str) -> int:
 
 
 def factorial(n: int) -> int:  # вспомним рекурсию :-)
+    """Функция возвращает факториал числа"""
     if n == 1:
         return n
     else:
@@ -63,6 +66,7 @@ def factorial(n: int) -> int:  # вспомним рекурсию :-)
 
 
 def check_sum_elements(list_of_number: list[int | float]) -> int | float:
+    """Функция возвращает сумму элементов списка чисел"""
     result = 0
     for n in list_of_number:
         result += n
@@ -70,6 +74,7 @@ def check_sum_elements(list_of_number: list[int | float]) -> int | float:
 
 
 def fill_list_random_int(size: int, min_n: int, max_n: int) -> list[int]:
+    """Функция заполняет список случайными целыми числами"""
     result = []
     for _ in range(size):
         result.append(random.randint(min_n, max_n))
@@ -77,11 +82,13 @@ def fill_list_random_int(size: int, min_n: int, max_n: int) -> list[int]:
 
 
 def fill_list(limit: int) -> list[int]:
+    """Функция заполняет список целыми числами с шагом 1"""
     result = [i for i in range(-limit, limit + 1)]
     return result
 
 
-def mixing_list(inp_list: list[int]) -> list[int]:
+def mixing_list(inp_list: list[int | float | str]) -> list[int | float | str]:
+    """Функция перемешивает список"""
     result = [n for n in inp_list]  # иначе меняет исходный список :-(
     l = len(result)
     for _ in range(1000):
