@@ -1,10 +1,10 @@
-#     Задание 1 Напишите программу, которая принимает на вход вещественное число 
+#     Задание 1 Напишите программу, которая принимает на вход вещественное число
 # и показывает сумму его цифр.
 # Пример:
 # 6782 -> 23
 # 0,56 -> 11
 
-# Задание 2 Напишите программу, которая принимает на вход число N 
+# Задание 2 Напишите программу, которая принимает на вход число N
 # и выдает набор произведений чисел от 1 до N.
 # Пример:
 # пусть N = 4, тогда [ 1, 2, 6, 24 ] (1, 1*2, 1*2*3, 1*2*3*4)
@@ -20,9 +20,11 @@
 
 # Задание 5 Реализуйте алгоритм перемешивания списка.
 
+import random
 
 
-def make_choice(question: str) -> bool:  # определяем выполнять (повторять) задачу или переходить к следующей    print(question)
+def make_choice(
+        question: str) -> bool:  # определяем выполнять (повторять) задачу или переходить к следующей    print(question)
     yes_answers = ['y', 'yes', 'д', 'да', 'lf', 'нуы', 'l']
     no_answers = ['n', 'no', 'н', 'нет', 'ytn', 'тщ', 'т']
     print(question)
@@ -46,27 +48,52 @@ def get_int(request: str) -> int:
 
 def get_sum_digit(n: str) -> int:
     result = 0
-    chars_list = list(n)    
+    chars_list = list(n)
     for c in chars_list:
         if c.isdigit():
             result += int(c)
-    return result      
-    
+    return result
+
 
 def factorial(n: int) -> int:  # вспомним рекурсию :-)
     if n == 1:
         return n
-    else: 
+    else:
         return n * factorial(n - 1)
 
 
 def check_sum_elements(list_of_number: list[int | float]) -> int | float:
-    result = 0 
+    result = 0
     for n in list_of_number:
         result += n
     return result
 
-    
+
+def fill_list_random_int(size: int, min_n: int, max_n: int) -> list[int]:
+    result = []
+    for _ in range(size):
+        result.append(random.randint(min_n, max_n))
+    return result
+
+
+def fill_list(limit: int) -> list[int]:
+    result = [i for i in range(-limit, limit + 1)]
+    return result
+
+
+def mixing_list(inp_list: list[int]) -> list[int]:
+    result = [n for n in inp_list]  # иначе меняет исходный список :-(
+    l = len(result)
+    for _ in range(1000):
+        i = random.randrange(0, l)
+        j = random.randrange(0, l)
+        a = result[i]
+        b = result[j]
+        result[i] = b
+        result[j] = a
+    return result
+
+
 print()
 while make_choice("Выполняем задачу 1 (сумма цифр)? "):
     print()
@@ -78,6 +105,7 @@ while make_choice("Выполняем задачу 1 (сумма цифр)? "):
 
 print()
 while make_choice("Выполняем задачу 2 (факториалы)? "):
+    print()
     n_factorial = get_int('Введите целое число: ')
     factorial_list = [factorial(i) for i in range(1, n_factorial + 1)]
     print(factorial_list)
@@ -86,10 +114,48 @@ while make_choice("Выполняем задачу 2 (факториалы)? "):
 
 print()
 while make_choice("Выполняем задачу 3 (сумма элементов последовательности)? "):
-    elements = get_int('Введите целое число элементов: ')
-    my_list = [(1 + 1 / i)**i for i in range(1, elements + 1)]
+    print()
+    elements = get_int('Введите целое число (количество элементов): ')
+    my_list = [(1 + 1 / i) ** i for i in range(1, elements + 1)]
     sum_elements = check_sum_elements(my_list)
     print("В списке")
     print(my_list)
     print(f'Сумма элементов приблизительно равна {round(sum_elements, 3)}')
+    print()
+
+
+print()
+while make_choice("Выполняем задачу 4 (умножение элементов списка)? "):
+    print()
+    N = get_int("Введите целое число N (список от -N до N): ")
+    list1 = fill_list(N)
+    list_size = N * 2 + 1
+    print('Введите номера элементов для перемножения')
+    num1 = -1
+    num2 = -1
+    while num1 < 0 or num1 > list_size:
+        num1 = get_int(f"Введите первый номер (от 1 до {list_size}): ")
+    while num2 < 0 or num2 > list_size: 
+        num2 = get_int(f"Введите второй номер (от 1 до {list_size}): ")
+
+    print('В списке')
+    print(list1)
+    print(f'умножение элемента №{num1} ( {list1[num1 - 1]} ) на элемент №{num2} ( {list1[num2 - 1]} ) '
+          f'даёт {list1[num1 - 1] * list1[num2 - 1]}')
+    print()
+
+print()
+while make_choice("Выполняем задачу 5 (перемешивание списка)? "):
+    print()
+    size = get_int('Введите размер заполняемого массива: ')
+    min_element = get_int('Введите минимальное значение элементов массива: ')
+    max_element = min_element - 1
+    while max_element < min_element:
+        max_element = get_int(f'Введите максимальное значение элементов массива (больше {min_element}): ')
+    input_list = fill_list_random_int(size, min_element, max_element)
+    output_list = mixing_list(input_list)
+    print('Исходный список:')
+    print(input_list)
+    print('Перемешаный список:')
+    print(output_list)
     print()
