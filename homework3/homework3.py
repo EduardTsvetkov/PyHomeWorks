@@ -77,11 +77,30 @@ def get_sum_odd_elements(input_list: int | float) -> int | float:
     return result
 
 
+def get_multiplication_elements(input_list: int | float) -> list[int | float]:
+    """Функция считает произведения элементов, находящихся одинаковых позициях с концов списка"""
+    result = []
+    n = -(-len(input_list) // 2)  # чтоб при нечетных центральный умножить сам на себя
+    for i in range(n):
+            result.append(input_list[i] * input_list[-(i + 1)])
+    return result
+
+
 print()
 while make_choice("Решаем задачу 1 (сумма элементов на нечетных позициях)? "):
     print()
+    print("Заполняем список случайными целыми числами")
     first_list = fill_list_random_int()
     print(f'Сумма элементов на нечетных позициях в списке \n {first_list} равна {get_sum_odd_elements(first_list)}')
+    print()        
+
+
+print()
+while make_choice("Решаем задачу 2 (произведение пар чисел списка)? "):
+    print()
+    print("Заполняем список случайными целыми числами")
+    second_list = fill_list_random_int()
+    print(f'Произведение элементов списка \n {second_list} -> {get_multiplication_elements(second_list)}')
     print()        
 
 
