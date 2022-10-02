@@ -26,3 +26,62 @@
 # - для k = 8 список будет выглядеть так: 
 # [-21 ,13, -8, 5, −3, 2, −1, 1, 0, 1, 1, 2, 3, 5, 8, 13, 21] 
 
+from random import randint
+
+def make_choice(question: str) -> bool:
+    """Возвращаем ответ на вопрос: True - если 'да', False - если 'нет'"""  
+    yes_answers = ['y', 'yes', 'д', 'да']
+    no_answers = ['n', 'no', 'н', 'нет']
+    print(question)
+    while (True):
+        choice = input("Ведите y,yes,д,да если 'ДА' либо n,no,н,нет если 'НЕТ': ").lower()
+        if choice in yes_answers:
+            return True
+        elif choice in no_answers:
+            return False
+
+
+def get_int(request: str) -> int:
+    """Функция возвращает целое число, введенное с клавиатуры"""
+    while (True):
+        n = input(request)
+
+        if n != '' and (n.isdigit() or (n[0] == '-' and n[1:].isdigit())):
+            return int(n)
+
+        print('\033[31mЭто не целое число!\033[37m')
+
+
+def fill_list_random_int() -> list[int]:
+    """Функция заполняет список случайными целыми числами"""
+    size = 0
+    while size < 1:
+        size = get_int('Введите размер заполняемого списка (положительное число): ')
+    min_n = get_int('Введите минимальное значение элементов списка: ')
+    max_n = min_n - 1
+    while max_n < min_n:
+        max_n = get_int(f'Введите максимальное значение элементов списка (больше {min_n}): ')
+    result = []
+    for _ in range(size):
+        result.append(randint(min_n, max_n))
+    return result
+
+
+def get_sum_odd_elements(input_list: int | float) -> int | float:
+    """Функция считает сумму элементов, находящихся на нечетных позициях"""
+    result = 0
+    n = len(input_list)
+    for i in range(n):
+        if i % 2:
+            result += input_list[i]
+    return result
+
+
+print()
+while make_choice("Решаем задачу 1 (сумма элементов на нечетных позициях)? "):
+    print()
+    first_list = fill_list_random_int()
+    print(f'Сумма элементов на нечетных позициях в списке \n {first_list} равна {get_sum_odd_elements(first_list)}')
+    print()        
+
+
