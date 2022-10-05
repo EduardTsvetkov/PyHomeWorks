@@ -26,7 +26,7 @@
 # - для k = 8 список будет выглядеть так: 
 # [-21 ,13, -8, 5, −3, 2, −1, 1, 0, 1, 1, 2, 3, 5, 8, 13, 21] 
 
-from random import randint
+from random import randint, uniform
 
 def make_choice(question: str) -> bool:
     """Возвращаем ответ на вопрос: True - если 'да', False - если 'нет'"""  
@@ -56,7 +56,7 @@ def fill_list_random_int() -> list[int]:
     """Функция заполняет список случайными целыми числами"""
     size = 0
     while size < 1:
-        size = get_int('Введите размер заполняемого списка (положительное число): ')
+        size = get_int('Введите размер заполняемого списка (больше 0): ')
     min_n = get_int('Введите минимальное значение элементов списка: ')
     max_n = min_n - 1
     while max_n < min_n:
@@ -64,6 +64,21 @@ def fill_list_random_int() -> list[int]:
     result = []
     for _ in range(size):
         result.append(randint(min_n, max_n))
+    return result
+
+
+def fill_list_random_float(prec: int) -> list[float]:
+    """Функция заполняет список случайными вещественными числами"""
+    size = 0
+    while size < 1:
+        size = get_int('Введите размер заполняемого списка (больше 0): ')
+    min_n = get_int('Введите минимальное значение элементов списка: ')
+    max_n = min_n - 1
+    while max_n < min_n:
+        max_n = get_int(f'Введите максимальное значение элементов списка (больше {min_n}): ')
+    result = []
+    for _ in range(size):
+        result.append(round(uniform(min_n, max_n), prec))
     return result
 
 
@@ -86,6 +101,19 @@ def get_multiplication_elements(input_list: int | float) -> list[int | float]:
     return result
 
 
+def difference_fractional_part(input_list: list[float], prec: int) -> float:
+    """Функция считает разность между максимальной и минимальной дробной частью"""
+    min_fract = round(input_list[0] - int(input_list[0]), prec)
+    max_fract = min_fract
+    for n in input_list:
+        fract = round(n - int(n), prec)
+        if fract > max_fract:
+            max_fract = fract
+        elif fract < min_fract:
+            min_fract = fract   
+    return round(max_fract - min_fract, prec)
+
+
 print()
 while make_choice("Решаем задачу 1 (сумма элементов на нечетных позициях)? "):
     print()
@@ -104,3 +132,14 @@ while make_choice("Решаем задачу 2 (произведение пар 
     print()        
 
 
+print()
+while make_choice("Решаем задачу 3 (разность дробных частей вещественных элементов)? "):
+    print()
+    print("Заполняем список случайными вещественными числами")
+    precision = 0
+    while precision < 1:
+        precision = get_int('Введите число знаков после запятой (больше 0) : ')
+    third_list = fill_list_random_float(precision)
+   
+    print(f'В списке \n {third_list} \nразница меду дробными частями равна {difference_fractional_part(third_list, precision)}')
+    
