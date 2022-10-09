@@ -19,22 +19,56 @@
 # Коэффициенты могут быть как положительными, так и отрицательными. Степени многочленов могут отличаться.
 
 
+import my_function as my
+
+def get_pi(k: int) -> float:
+    """Функция вычисляет число pi с заданным количеством знаков после запятой"""
+    pi_ = 4
+    n = 1
+    delta = 1
+    precision = 10**(-k)
+    while True:
+        delta = ((1 / (2 * n + 1))*(-1)**n) * 4
+        if abs(delta) < precision:
+            break
+
+        pi_ = pi_ + delta
+        n += 1
+
+    return round(pi_, k)
 
 
-# 1 Вычислить число π c заданной точностью d
-d = 3
-pi_ = 4
-n = 1
-delta = 1
-precision = 10**(-d)
-print(precision)
-while True:
-    delta = ((1 / (2 * n + 1))*(-1)**n) * 4
-    if abs(delta) < precision:
-        break
+def get_prime_devisors(n: int) -> list[int]:
+    result = []
+    i = 2
+    while n > 1:
+        if n % i:
+            i += 1
+        else:
+            result.append(i)
+            n //= i
+    return result        
 
-    pi_ = pi_ + delta
-    n += 1
 
-print(round(pi_, d))
 print()
+while my.make_choice("Решаем задачу 1 (вычисление числа pi)? "):
+    d = 11
+    print("Введите точность расчетов (число знаков после запятой): ")
+    print("(при числах, больших 7 - считает долго...)")
+    while d < 1 or d > 10:
+        d = my.get_int("(введите целое число от 1 до 10): ")
+    print(f"Число pi с точностью до {d} знаков после запятой:")
+    print(get_pi(d))
+    print()
+print()
+
+
+print()
+while my.make_choice("Решаем задачу 2 (список простых множителей)? "):
+    num = abs(my.get_int("Введите целое число: "))
+    devisors = get_prime_devisors(num)
+    print(f"Простые делители числа {num}:")
+    print(devisors)
+    print()
+print()
+
