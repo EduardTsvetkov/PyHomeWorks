@@ -20,6 +20,8 @@
 
 
 import my_function as my
+from random import randint
+
 
 def get_pi(k: int) -> float:
     """Функция вычисляет число pi с заданным количеством знаков после запятой"""
@@ -50,6 +52,29 @@ def get_prime_devisors(n: int) -> list[int]:
     return result        
 
 
+def get_polinom(n: int) -> str:
+    member_list = []
+    for i in range(n, -1, -1):
+        k = randint(-100, 100)
+        if i == n:
+            member_list.append(f"{k}*x^{i} ")
+            continue
+        
+        if k > 0:
+            member_list.append("+ ")
+        elif k < 0:
+            member_list.append("- ")
+        else:
+            continue
+        if i == 0:
+            member_list.append(f"{abs(k)} ")
+        else:
+            member_list.append(f"{abs(k)}*x^{i} ")
+        
+    member_list.append("= 0")
+    return ''.join(member_list)
+
+
 print()
 while my.make_choice("Решаем задачу 1 (вычисление числа pi)? "):
     d = 11
@@ -72,3 +97,21 @@ while my.make_choice("Решаем задачу 2 (список простых �
     print()
 print()
 
+
+print()
+while my.make_choice("Решаем задачу 4 (многочлен)? "):
+    
+    degree = abs(my.get_int("Введите степень первого многочлена (положительное целое число): "))
+    polinom1 = get_polinom(degree)
+    file1 = open("polinom1.txt", "w")
+    file1.write(polinom1)
+    file1.close()
+        
+    print(f"{polinom1} сохранен в файл 'polinom1.txt'")
+    
+    degree = abs(my.get_int("Введите степень первого многочлена (положительное целое число): "))
+    polinom2 = get_polinom(degree)
+    file2 = open("polinom2.txt", "w")
+    file2.write(polinom2)
+    file2.close()
+    print(f"{polinom2} сохранен в файл 'polinom2.txt'")
