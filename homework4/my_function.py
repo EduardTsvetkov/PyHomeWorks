@@ -1,3 +1,5 @@
+from random import randint
+
 def make_choice(question: str) -> bool:
     """Возвращаем ответ на вопрос: True - если 'да', False - если 'нет'"""  
     yes_answers = ['y', 'yes', 'д', 'да']
@@ -19,3 +21,18 @@ def get_int(request: str) -> int:
             return int(n)
  
         print('\033[31mЭто не целое число!\033[37m')
+
+
+def fill_list_random_int() -> list[int]:
+    """Функция заполняет список случайными целыми числами"""
+    size = 0
+    while size < 1:
+        size = get_int('Введите размер заполняемого списка (больше 0): ')
+    min_n = get_int('Введите минимальное значение элементов списка: ')
+    max_n = min_n - 1
+    while max_n < min_n:
+        max_n = get_int(f'Введите максимальное значение элементов списка (больше {min_n}): ')
+    result = []
+    for _ in range(size):
+        result.append(randint(min_n, max_n))
+    return result
