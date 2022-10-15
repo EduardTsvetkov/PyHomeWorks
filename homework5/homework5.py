@@ -23,12 +23,6 @@ import my_function as my
 def string_cleaning(inp_text, inp_str: str) -> str:
     """Функция удаляет из текста слова, содержащую указанный набор символов"""
     my_list = inp_text.split()
-    # l = []
-    # for x in my_list:
-    #     if inp_str not in x:
-    #         l.append(x)
-    # result = ' '.join(l)
- 
     result = ' '.join(list(filter(lambda x: inp_str not in x, my_list)))
     return result
  
@@ -76,7 +70,33 @@ def decoding_word_RLE(inp_word: str) -> str:
  
     result = ''.join(l) 
     return result   
- 
+
+
+def get_sequences(input_list: list[int]):
+    """Функция возвращает списки возрастающих последовательностей"""
+    result = []
+    n = len(data_list)
+    for i in range(2**n):
+        mask = bin(i)[2:].rjust(n, '0')
+        temp_list = []
+
+        for i in range(n): 
+            if mask[i] == "1":
+                temp_list.append(input_list[i])
+        sorrt_list = temp_list.copy()
+        sorrt_list.sort()
+        flag = True
+        if len(temp_list) > 1:
+            for i in range(1, len(temp_list)):
+                if temp_list[i] <= temp_list[i - 1]:
+                    flag = False
+                    break
+            if flag:    
+                result.append(temp_list)
+
+    return result
+
+
 print()
 while my.make_choice("Решаем задачу 1 (удаление слов из текста),"):
     print()
@@ -111,5 +131,30 @@ while my.make_choice("Решаем задачу 4 (RLE)? "):
     print(coded_string)
     print("Раскодированная строка:")
     print(decoding_word_RLE(coded_string))
+    print()
+print()
+
+
+print()
+while my.make_choice("Решаем задачу 5 (возрастающие последовательности)? "):
+    print()
+    list_file = open("input_list.txt", "r")
+    data = list_file.read()
+    list_file.close()
+    data_list = [int(s) for s in data[1:-1].split(", ")]
+    
+    print("Входные данные (из файла input_list.txt):")
+    print(data_list)
+    print("Полученные последовательности (сохранены в файл secuences.txt):")
+
+    sequences = get_sequences(data_list)
+    sequences.sort()
+    print(sequences)
+
+    sequences_file = open("secuences.txt", "w")
+    for l in sequences:
+        print(*l, file=sequences_file, sep=", ")
+    sequences_file.close()
+
     print()
 print()
