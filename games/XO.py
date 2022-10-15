@@ -149,34 +149,4 @@ while make_choice("Поиграем в 'Крестики-нолики'? "):
         print("Боевая ничья!")
     print()
 
-    #     print(f"На столе лежат конфеты - {total_sweets} шт.")
-    # print(f"За один ход можно взять не более {max_sweets} конфет.")
-    # print()
-    # get_sweets = 0
-
-    # while total_sweets > 0:
-    #     if players[0] == -1 or current_player == 1:  # ход человека
-    #         print(f"Ход игрока по имени {players[current_player]}.")
-    #         get_sweets = get_int("Сколько Вы берёте конфет? ")
-    #         while get_sweets > min(total_sweets, max_sweets):
-    #             print(f"Число должно быть от 1 до {min(total_sweets, max_sweets)}")
-    #             get_sweets = get_int("Сколько Вы берёте конфет? ")
-    #     elif current_player == -1 and players[0] == 1:  # ходит второй игрок (умный бот)
-    #         get_sweets = smart_move(total_sweets, max_sweets)  # считаем умный ход бота
- 
-    #     elif current_player == -1 and players[0] == 0:  # 0 - ходит второй игрок (обычный бот)
-    #         if total_sweets <= max_sweets:  # если игрок тормоз, то забираем всё... :-)
-    #             get_sweets = total_sweets
-    #         else:
-    #             get_sweets = randint(1, max_sweets)  
- 
-    #     total_sweets -= get_sweets
-    #     print(f"{players[current_player]} взял {get_sweets} шт.")
-    #     print(f"На столе осталось {total_sweets} конфет.")  
-    #     print()
- 
-    #     current_player *= -1          
-        
-    # print(f"Выиграл игрок по имени {players[current_player * -1]}")
-    # print("Поздравляем!!!")
-    # print()
+    
