@@ -6,7 +6,7 @@
 #   b) Подумайте как наделить бота ""интеллектом""
  
 from random import randint, random
-from tkinter import Y
+
  
 def make_choice(question: str) -> bool:  # определяем выполнять (повторять) задачу или переходить к следующей    print(question)
     """Возвращаем ответ на вопрос: True - если 'да', False - если 'нет'"""
@@ -114,7 +114,7 @@ while make_choice("Поиграем в конфетки? "):
     print()
     get_sweets = 0
     while total_sweets > 0:
-        if players[0] == -1 or current_player == 1:
+        if players[0] == -1 or current_player == 1:  # ход человека
             print(f"Ход игрока по имени {players[current_player]}.")
             get_sweets = get_int("Сколько Вы берёте конфет? ")
             while get_sweets > min(total_sweets, max_sweets):
