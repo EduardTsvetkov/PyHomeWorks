@@ -1,28 +1,35 @@
 
 import my_function as my
  
-# creating a .txt file to store contact details 
+
 filename = "phonebook.txt" 
-myfile = open(filename, "a") 
+myfile = open(filename, "a", encoding="utf-8") 
 myfile.close 
  
 
- 
-# defining search function         
+def display_contacts_list(input_list):
+    print("{0:>25} {1:>15} {2:>15}".format("Фамилия Имя |", "Телефон |", "Описание"))
+    print("-" * 59)
+    for s in input_list:
+        l = s[:-1].split(";")
+        print("{0:>25} {1:>15} {2:>15}".format(f"{l[0]} {l[1]} |", f"{l[2]} |", l[3]))
+
+
 def search_contact(): 
     searchname = input( "Введите фамилию, имя или номер телефона (полностью или частично): ").upper()
-    myfile = open(filename, "r+") 
-    contact_string = myfile.readlines() 
+    myfile = open(filename, "r", encoding="utf-8") 
+    contacts_list = myfile.readlines() 
       
-    found = False 
-    for line in contact_string: 
+    found = [] 
+    for line in contacts_list: 
         if searchname in line: 
-            print( "Искомый контакт:", end = " ") 
-            print( line) 
-            found = True 
-            break 
-    if found == False: 
-        print(f"Искомый контакт '{searchname}' не найден.") 
+            found.append(line)
+            
+    if len(found):
+        print(f"Контакты, содержащие {searchname}: ") 
+        display_contacts_list(found)   
+    else:
+        print(f"Искомый текст '{searchname}' не найден.") 
  
  
 
@@ -31,12 +38,11 @@ def add_contact():
     firstname = input( "Введите имя: ").upper() 
     phone_num = input( "Введите номер телефона: ") 
     comment  = input( "Введите комментарий: ").upper()
-    contact  = f"{lastname};{firstname};{phone_num};{comment}" 
-    myfile = open(filename, "a") 
+    contact  = f"{lastname};{firstname};{phone_num};{comment}\n" 
+    myfile = open(filename, "a", encoding="utf-8") 
     myfile.write(contact) 
     print(f"Контакт {lastname} {firstname} добавлен!") 
  
-
 
 
 print("ТЕЛЕФОННАЯ КНИГА")
@@ -51,12 +57,12 @@ while True:
     choice = my.get_int("Введите номер пункта меню: ") 
     if choice == 1: 
         print("Имеющиеся контакты: ")
-        myfile = open(filename, "r+") 
-        contacts = myfile.read() 
+        myfile = open(filename, "r+", encoding="utf-8") 
+        contacts = myfile.readlines()
         if len(contacts) == 0: 
             print( "Телефонная книга пуста...") 
         else: 
-            print(contacts) 
+            display_contacts_list(contacts)
         myfile.close 
         input("Нажмите Enter для перехода в меню...") 
     elif choice == 2: 
