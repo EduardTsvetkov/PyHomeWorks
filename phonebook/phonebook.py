@@ -4,7 +4,7 @@ import my_function as my
 
 filename = "phonebook.txt" 
 myfile = open(filename, "a", encoding="utf-8") 
-myfile.close 
+myfile.close()
  
 
 def display_contacts_list(input_list):
@@ -19,8 +19,9 @@ def search_contact():
     searchname = input( "Введите фамилию, имя или номер телефона (полностью или частично): ").upper()
     myfile = open(filename, "r", encoding="utf-8") 
     contacts_list = myfile.readlines() 
+    myfile.close()
       
-    found = [] 
+    
     for line in contacts_list: 
         if searchname in line: 
             found.append(line)
@@ -42,7 +43,18 @@ def add_contact():
     myfile = open(filename, "a", encoding="utf-8") 
     myfile.write(contact) 
     print(f"Контакт {lastname} {firstname} добавлен!") 
- 
+
+# набросок... необходимо сделать контроль (добавление, дубли), отчет
+# проверку наличия \n
+def import_csv(path):  
+    import_file = open(path, "r", encoding="utf-8")
+    import_list = import_file.readlines() 
+    import_file.close()
+
+    myfile = open(filename, "a", encoding="utf-8") 
+    for line in import_list:
+        myfile.write(line) 
+    myfile.close()
 
 
 print("ТЕЛЕФОННАЯ КНИГА")
@@ -63,7 +75,7 @@ while True:
             print( "Телефонная книга пуста...") 
         else: 
             display_contacts_list(contacts)
-        myfile.close 
+        myfile.close()
         input("Нажмите Enter для перехода в меню...") 
     elif choice == 2: 
         add_contact() 
@@ -71,6 +83,8 @@ while True:
     elif choice == 3:
         input("Нажмите Enter для перехода в меню...") 
     elif choice == 4:
+        csv_file = "for_import.csv"
+        import_csv(csv_file)
         input("Нажмите Enter для перехода в меню...") 
     elif choice == 5: 
         search_contact() 
