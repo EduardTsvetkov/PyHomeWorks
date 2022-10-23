@@ -10,8 +10,12 @@ def get_int(request: str) -> int:
 
 def check_access(log, pas: str) -> bool:
     """Функция проверяет соответствие логина и пароля пользователя"""
-    if log == "admin" and  pas == "admin":
-        return True
+    with open('users.txt', "r", encoding="utf-8") as users_file:
+        users_list = users_file.readlines() 
+        for user in users_list:
+            l = user.split(";")
+            if log == l[0] and  pas == l[1]:
+               return True
     return False
 
 
@@ -24,21 +28,21 @@ def display_menu(category: int) -> int:
         print("3. Оценить ДЗ студента")
         print("4. Добавить ДЗ")
         print("5. ") 
-        print("6. Выход из программы") 
+        print("0. Выход из программы") 
     elif category == 2:
         print("1. Показать ДЗ студента") 
         print("2. Показать оценки студента") 
         print("3. Показать долги студента")
         print("4. ")
         print("5. ") 
-        print("6. Выход из программы") 
+        print("0. Выход из программы") 
     else:
         print("1. Показать пользователей") 
         print("2. Добавить пользователя") 
         print("3. Удалить пользователя")
-        print("6. Выход из программы") 
+        print("0. Выход из программы") 
 
-    return get_int("Введите номер пункта меню: ") 
+    return get_int("Введите номер пункта меню: ") + category * 10
 
 
 
@@ -59,10 +63,23 @@ while not flag and attempt_counter:
 if not flag:
     print("Вы не авторизованы в программе!")
 else:
-    print("Добро пожаловать {}!\n")
+    with open('users.txt', "r", encoding="utf-8") as users_file:
+        users_list = users_file.readlines() 
+        for user in users_list:
+            l = user.split(";")
+            if login == l[0]:
+                user_name = l[2]
+                user_category = int(l[3])
+                print(f"Добро пожаловать {user_name}!\n")
+
+print(user_name, user_category)
+
 
 while flag:
-    if display_menu(3) == 6:
+    choise = display_menu(user_category)
+
+
+    if not (choise % 10):
         break
 
 
