@@ -24,10 +24,10 @@ def display_menu(category: int) -> int:
     if category == 1:
         print("1. Показать ДЗ по предметам") 
         print("2. Добавить ДЗ по предметам") 
-        print("2. Показать ДЗ по студентам") 
-        print("3. Оценить ДЗ студента")
-        print("4. Добавить ДЗ")
-        print("5. ") 
+        print("3. Показать ДЗ по студентам") 
+        print("4. Оценить ДЗ студента")
+        print("5. Добавить ДЗ")
+        print("6. ") 
         print("0. Выход из программы") 
     elif category == 2:
         print("1. Показать ДЗ студента") 
@@ -78,11 +78,39 @@ print(user_name, user_category)
 while flag:
     choise = display_menu(user_category)
 
-
-    if not (choise % 10):
+    if choise == 11:
+        print("Вызов 1. Показать ДЗ по предметам") 
+    elif choise == 12:
+        print("Вызов 2. Добавить ДЗ по предметам") 
+    elif choise == 13:
+        print("Вызов 3. Показать ДЗ по студентам") 
+    elif choise == 14:
+        print("Вызов 4. Оценить ДЗ студента")
+    elif choise == 15:    
+        print("Вызов 5. Добавить ДЗ")
+    elif choise == 16:
+        print("Вызов 6. ") 
+    elif choise == 21:
+        print("Вызов 1. Показать ДЗ студента") 
+    elif choise == 22:
+        print("Вызов 2. Показать оценки студента") 
+    elif choise == 23:
+        print("Вызов 3. Показать долги студента")
+    elif choise == 24:
+        print("Вызов 4. ")
+    elif choise == 31:
+        print("Вызов 1. Показать пользователей") 
+    elif choise == 32:
+        print("Вызов 2. Добавить пользователя") 
+    elif choise == 33:
+        print("Вызов 3. Удалить пользователя")
+    elif not (choise % 10):
         break
+    else:
+        print("Вы ввели несуществующий пункт меню!")
 
 
 
 
 print("Всего доброго!")
+print()
