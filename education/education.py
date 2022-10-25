@@ -17,15 +17,15 @@ def check_access(log, pas: str) -> bool:
 def display_menu(category: int) -> int:
     """Функция выводит на экран меню, в зависимости от категории пользователя, и возвращает его выбор"""    
     if category == 1:
-        print("1. Показать ДЗ по предметам") 
-        print("2. Добавить ДЗ по предметам") 
-        print("3. Показать ДЗ по студентам") 
+        print("1. Показать ДЗ") 
+        print("2. Добавить ДЗ") 
+        print("3. Показать долги студентов") 
         print("4. Оценить ДЗ студента")
         print("5. ")
         print("6. ") 
         print("0. Выход из программы") 
     elif category == 2:
-        print("1. Показать ДЗ студента") 
+        print("1. Показать ДЗ") 
         print("2. Показать оценки студента") 
         print("3. Показать долги студента")
         print("4. ")
@@ -69,23 +69,43 @@ while flag:
     choise = display_menu(user_category)
 
     if choise == 11:
-        print("Вызов 1. Показать ДЗ по предметам") 
+        print("Имеющиеся задания: ")
+        hw_file = open("hw.txt", "r", encoding="utf-8") 
+        hw = hw_file.readlines()
+        if len(hw) == 0: 
+            print( "Список заданий пустой...") 
+        else: 
+            teacher.display_hw_list(hw)
+        hw_file.close()
+        input("Нажмите Enter для перехода в меню...")
     elif choise == 12:
-        print("Вызов 2. Добавить ДЗ по предметам") 
+        teacher.add_hw()
+        input("Нажмите Enter для перехода в меню...")  
     elif choise == 13:
-        print("Вызов 3. Показать ДЗ по студентам") 
+        teacher.get_debts()
+        input("Нажмите Enter для перехода в меню...")  
     elif choise == 14:
-        print("Вызов 4. Оценить ДЗ студента")
+        teacher.put_rating()
+        input("Нажмите Enter для перехода в меню...") 
     elif choise == 15:    
         print("Вызов 5. ")
     elif choise == 16:
         print("Вызов 6. ") 
     elif choise == 21:
-        print("Вызов 1. Показать ДЗ студента") 
+        print("Имеющиеся задания: ")
+        hw_file = open("hw.txt", "r", encoding="utf-8") 
+        hw = hw_file.readlines()
+        if len(hw) == 0: 
+            print( "Список заданий пустой...") 
+        else: 
+            teacher.display_hw_list(hw)
+        hw_file.close()
+        input("Нажмите Enter для перехода в меню...") 
     elif choise == 22:
         print("Вызов 2. Показать оценки студента") 
     elif choise == 23:
-        print("Вызов 3. Показать долги студента")
+        teacher.get_student_debts(user_name)
+        input("Нажмите Enter для перехода в меню...")
     elif choise == 24:
         print("Вызов 4. ")
     elif choise == 31:

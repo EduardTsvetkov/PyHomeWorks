@@ -30,10 +30,16 @@ def write_users_list(input_list):
 
 
 def add_users(): 
+    d = my.file_to_dct("users.txt", "utf-8", ";")
     result = []
+    print("Введите данные нового пользователя")
     while True:
-        print("Введите данные нового пользователя")
-        login = input( "логин: ")
+        while True:
+            login = input( "логин: ")
+            if login in d:
+                print("Такой логин существует.")
+            else:
+                break
         password = input( "пароль: ")
         lastname = input( "фамилия: ").upper()
         firstname = input( "имя: ").upper() 

@@ -1,0 +1,9 @@
+1;sidorov;5
+1;mihailov;4
+2;sidorov;4
+3;sidorov;5
+3;mihailov;4
+4;sidorov;5
+4;mihailov;4
+6;mihailov;5
+8;sidorov;5
