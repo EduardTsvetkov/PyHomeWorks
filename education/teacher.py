@@ -1,5 +1,4 @@
  
-# print("Вызов 4. Оценить ДЗ студента")
 import my_function as my
 
 def display_hw_list(input_list: list):
@@ -39,26 +38,30 @@ def add_hw():
         n += 1
     write_hw_list(result)
 
-# доделать
+
 def display_scores_list(input_list: list):
     """Функция выводит список оценок"""
-    print("{:>3} {:3} {:15} {:3} {:25}".format("№", " | ", "Предмет", " | ",
-                                                            "Задание"))
-    print("-" * 60)
+    hw_dct = my.file_to_dct("hw.txt", "utf-8", ";")
+    print("{:>3} {:3} {:15} {:3} {:30} {:3} {:^5}".format("ДЗ", " | ", "Предмет", " | ",
+                                               "Задание", " | ", "Оценка"))
+    print("-" * 70)
     for s in input_list:
         l = s[:-1].split(";")
-        print("{:>3} {:3} {:15} {:3} {:25}".format(l[0], " | ", l[1], " | ", l[2]))
+        l.append(hw_dct[l[0]][0])
+        l.append(hw_dct[l[0]][1])
+#        print(l)
+        print("{:>3} {:3} {:15} {:3} {:30} {:3} {:^5}".format(l[0], " | ", l[3], " | ", l[4], " | ", l[2]))
 
 
 
 def display_debts_list(input_list: list):
     """Функция выводит список оценок"""
-    print("{:>3} {:3} {:15} {:3} {:25} {:3} {:25}".format("ДЗ", " | ", "Предмет", " | ",
+    print("{:>3} {:3} {:15} {:3} {:30} {:3} {:25}".format("ДЗ", " | ", "Предмет", " | ",
                                                             "Задание", " | ", "Студент"))
-    print("-" * 75)
+    print("-" * 80)
     for s in input_list:
         l = s.split(";")
-        print("{:>3} {:3} {:15} {:3} {:25} {:3} {:25}".format(l[0], " | ", l[1], " | ", 
+        print("{:>3} {:3} {:15} {:3} {:30} {:3} {:25}".format(l[0], " | ", l[1], " | ", 
                                                                l[2], " | ", l[4]))
 
 def get_debts():
@@ -98,9 +101,10 @@ def get_student_debts(name):
             break
     else:
         print(f"Студента с именем {name} нет!")
-        return
+        return (None, None)
 
     result = []
+    debts_hw = []
     scores_file = open("scores.txt", "r", encoding="utf-8") 
     scores_list = scores_file.readlines()
     scores_file.close()
@@ -112,20 +116,44 @@ def get_student_debts(name):
                 break
         if flag:
             result.append(f"{hw_key};{hw_value[0]};{hw_value[1]};{login};{name}")
+            debts_hw.append(hw_key)
     
     display_debts_list(result)
-    return login
+    return (login, debts_hw)
 
 
 def put_rating():
     student_name = input("Введите фамилию и имя студента: ").upper()
-    student_login = get_student_debts(student_name)
+    student_login, hw_debts = get_student_debts(student_name)
     if student_login is None:
         return
-    hw = input("Введите номер ДЗ: ")
-    score = input("Введите оценку (от 1 до 5): ")
+    while True:
+        hw = input("Введите номер ДЗ: ")
+        if hw in hw_debts:
+            break
+        else:
+            print("Такого задания без оценки нет.")
+    while True:
+        score = input("Введите оценку (от 1 до 5): ")
+        if score in ["1", "2", "3", "4", "5"]:
+            break
+
     s = f"{hw};{student_login};{score}\n"
     myfile = open("scores.txt", "a", encoding="utf-8") 
     myfile.write(s) 
-    myfile.close()   
+    myfile.close()     
+    print("Оценка поставлена.")
+    get_student_scores(student_login)
+
+
+def get_student_scores(login):
+    scores_file = open("scores.txt", "r", encoding="utf-8") 
+    scores = scores_file.readlines()
+    scores_file.close()
+    result = []
+    for s in scores:
+        if login in s:
+            result.append(s)
+    
+    display_scores_list(result)
 

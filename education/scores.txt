@@ -7,3 +7,7 @@
 4;mihailov;4
 6;mihailov;5
 8;sidorov;5
+6;sidorov;3
+2;mihailov;3
+5;mihailov;5
+1;sergeev;3
