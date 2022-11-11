@@ -27,32 +27,9 @@ def get_int(request: str) -> int:
  
 def choosing_players() -> tuple:
     """Функция возвращает кортеж с флагом (кто играет) и списком игроков"""
-    # print("Введите количество игроков (1 или 2):")
-    # while True:
-    #     print("1 - игра с компьютером")
-    #     print("2 - игра с другим игроком")
-    #     players = input("-> ")
-    #     if players == "1":
-    #         pl1 = input("Введите Ваше имя: ") 
-    #         pl2 = "Бот"
-    #         break
-    #     elif players == "2":
     pl1 = input("Введите имя первого игрока: ") 
     pl2 = input("Введите имя второго игрока: ") 
-    #         break
-    #     else:
-    #         print("\033[31mВы ввели неправильное число!...\033[37m")
     smart = "-1"  # флаг -1, что игра с человеком
-    # if players == "1":
-    #     print("С каким ботом Вы будете играть?")
-    #     while True:
-    #         print("0 - игра с обычным ботом")
-    #         print("1 - игра с 'умным' ботом")
-    #         smart = input("-> ")
-    #         if smart in ["0", "1"]:
-    #             break
-    #         print("\033[31mВы ввели неправильное число!...\033[37m")
-    
     result = (int(smart), pl1, pl2)
     return result
  
@@ -85,17 +62,12 @@ def print_board(b: dict):
     print(f'''
      |     |   
  {b[1]}  | {b[2]}  | {b[3]}  
------+----+-----
+-----+-----+-----
  {b[4]}  | {b[5]}  | {b[6]} 
------+----+-----
+-----+-----+-----
  {b[7]}  | {b[8]}  | {b[9]} 
      |     |   
 ''')
-    # print("{:3} {:3} {:3} {:3} {:3}".format(b[1], " | ", b[2], " | ", b[3])) 
-    # print("-----+----+-----")
-    # print("{:4} {:3} {:4} {:3} {:4}".format(b[4], " | ", b[5], " | ", b[6])) 
-    # print("-----+----+-----")
-    # print("{:4} {:3} {:4} {:3} {:4}".format(b[7], " | ", b[8], " | ", b[9])) 
       
  
 def check_win(d: dict) -> bool:
@@ -133,14 +105,9 @@ while make_choice("Поиграем в 'Крестики-нолики'? "):
             print(f"Ход игрока по имени {players[current_player]} (играет '{simbols[current_player]}').")
             cell_num = get_int("Какую ячейку выбираем? ")
 
-            while cell_num < 1 or cell_num > 9:
+            while cell_num < 1 or cell_num > 9 or board[cell_num] == simbols[1] or board[cell_num] == simbols[-1]:
                 print(f"Свободной ячейки с номером {cell_num} нет")
                 cell_num = get_int("Какую ячейку выбираем? ")
-        # elif current_player == -1 and players[0] == 1:  # ходит второй игрок (умный бот)
-        #     get_smart_move()  # считаем умный ход бота
- 
-        # elif current_player == -1 and players[0] == 0:  # 0 - ходит второй игрок (обычный бот)
-        #     get_dump_move()
         board[cell_num] = simbols[current_player]
         print_board(board)
         if check_win(board):
