@@ -25,9 +25,14 @@ def read_last(lines, file):
 def longest_words(file):
     data = open(file, 'r', encoding='utf8')
     s_list = data.readlines()
+    data.close()
+    
     max_len = len(max(s_list, key=len))
-    for res in filter(lambda s: len(s) == max_len, s_list):
-        print(res)
+
+    data = open('result.txt', 'w', encoding='utf8')
+    data.writelines(filter(lambda s: len(s) == max_len, s_list))
+    data.close()
+
 
 read_last(3, 'article.txt')
 longest_words('article.txt')
