@@ -1,6 +1,7 @@
 
 from telebot import TeleBot
 import telebot.types
+from exchange import currency
 
 bot = TeleBot('5531697465:AAGRub4W8iidGkotLZmvqTA7rlCt-nC3SQE')
 
@@ -31,7 +32,8 @@ def display_contacts_list(message: telebot.types.Message):
     btn1 = telebot.types.KeyboardButton("Просмотр")
     btn2 = telebot.types.KeyboardButton("Поиск")
     btn3 = telebot.types.KeyboardButton("Экспорт")
-    markup.add(btn1, btn2, btn3)
+    back = telebot.types.KeyboardButton("Назад")
+    markup.add(btn1, btn2, btn3, back)
     bot.send_message(chat_id=message.from_user.id, text="Выберите действие", reply_markup=markup)
 
 
@@ -57,7 +59,8 @@ def search_contact(message: telebot.types.Message):
     btn1 = telebot.types.KeyboardButton("Просмотр")
     btn2 = telebot.types.KeyboardButton("Поиск")
     btn3 = telebot.types.KeyboardButton("Экспорт")
-    markup.add(btn1, btn2, btn3)
+    back = telebot.types.KeyboardButton("Назад")
+    markup.add(btn1, btn2, btn3, back)
     bot.send_message(chat_id=message.from_user.id, text="Выберите действие", reply_markup=markup)
 
 
@@ -76,7 +79,8 @@ def export_data(message: telebot.types.Message):
     btn1 = telebot.types.KeyboardButton("Просмотр")
     btn2 = telebot.types.KeyboardButton("Поиск")
     btn3 = telebot.types.KeyboardButton("Экспорт")
-    markup.add(btn1, btn2, btn3)
+    back = telebot.types.KeyboardButton("Назад")
+    markup.add(btn1, btn2, btn3, back)
     bot.send_document(chat_id=message.from_user.id, document=open(file_for_export, 'rb'))
     bot.send_message(chat_id=message.from_user.id, text="Выберите действие", reply_markup=markup)
 
@@ -107,7 +111,8 @@ def start(message):
     btn1 = telebot.types.KeyboardButton("Просмотр")
     btn2 = telebot.types.KeyboardButton("Поиск")
     btn3 = telebot.types.KeyboardButton("Экспорт")
-    markup.add(btn1, btn2, btn3)
+    btn4 = telebot.types.KeyboardButton("Валюты")
+    markup.add(btn1, btn2, btn3, btn4)
     bot.send_message(chat_id=message.from_user.id, text="Привет! Я, телефонный справочник.", reply_markup=markup)
 
 
@@ -143,16 +148,34 @@ def func(message):
         btn1 = telebot.types.KeyboardButton("Просмотр")
         btn2 = telebot.types.KeyboardButton("Поиск")
         btn3 = telebot.types.KeyboardButton("Экспорт")
-        markup.add(btn1, btn2, btn3)
+        btn4 = telebot.types.KeyboardButton("Валюты")
+        markup.add(btn1, btn2, btn3, btn4       )
         bot.send_message(chat_id=message.from_user.id, text="Выберите действие", reply_markup=markup)
+    elif (message.text == "Валюты"):   
+        bot.send_message(chat_id=message.from_user.id, text="Название валюты:")
+        bot.register_next_step_handler(message, pars)
+
     else:
         bot.send_message(chat_id=message.from_user.id, text="На такую комманду я не запрограммирован..")
         markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = telebot.types.KeyboardButton("Просмотр")
         btn2 = telebot.types.KeyboardButton("Поиск")
         btn3 = telebot.types.KeyboardButton("Экспорт")
-        markup.add(btn1, btn2, btn3)
+        btn4 = telebot.types.KeyboardButton("Валюты")
+        markup.add(btn1, btn2, btn3, btn4)
         bot.send_message(chat_id=message.from_user.id, text="Выберите действие", reply_markup=markup)
     
+
+@bot.message_handler(content_types=['text'])
+def pars(message):
+
+    bot.send_message(message.chat.id, currency(message.text))
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = telebot.types.KeyboardButton("Просмотр")
+    btn2 = telebot.types.KeyboardButton("Поиск")
+    btn3 = telebot.types.KeyboardButton("Экспорт")
+    btn4 = telebot.types.KeyboardButton("Валюты")
+    markup.add(btn1, btn2, btn3, btn4)
+    bot.send_message(chat_id=message.from_user.id, text="Выберите действие", reply_markup=markup)
 
 bot.polling(none_stop=True)
